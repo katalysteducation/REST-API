@@ -25,6 +25,19 @@ class Client
   const CLIENT_VERSION = '3.0';
 
   /**
+   * Error messages
+   * 
+   * @var array
+   */
+  private $messages = [
+    1301 => 'Adres email jest niepoprawny!',
+    1302 => 'Lista subskrypcyjna nie istnieje lub brak hash\'a listy!',
+    1303 => 'Jedno lub więcej pól dodatkowych jest niepoprawne!',
+    1304 => 'Subskrybent już istnieje w tej liście subskrypcyjnej!',
+    1305 => 'Próbowano nadać niepoprawny status subskrybenta!'
+  ];
+
+  /**
    * Bearer Token for authorization
    * @var string
    */
@@ -75,10 +88,26 @@ class Client
       if ($exception->getCode() == 401) {
         throw new UnauthorizedException('Request unauthorized');
       }
+      
+      $jsonError = $this->parseErrorMessage($exception->getMessage());
 
-      throw new \FreshMail\ApiV2\ClientException(sprintf('Connection error, error message: ' . $exception->getMessage()), 1);
+      if (array_key_exists(intval($jsonError->errors[0]->code), $this->messages)) {
+        $errorMessage = $this->messages[intval($jsonError->errors[0]->code)];
+      } else {
+        $errorMessage = $jsonError->errors[0]->message;
+      }
+
+      throw new \FreshMail\ApiV2\ClientException($errorMessage, $jsonError->errors[0]->code);
     } catch (\GuzzleHttp\Exception\ConnectException $exception) {
-      throw new ConnectionException(sprintf('Connection error, error message: ' . $exception->getMessage()), 2);
+      $jsonError = $this->parseErrorMessage($exception->getMessage());
+
+      if (array_key_exists(intval($jsonError->errors[0]->code), $this->messages)) {
+        $errorMessage = $this->messages[intval($jsonError->errors[0]->code)];
+      } else {
+        $errorMessage = $jsonError->errors[0]->message;
+      }
+
+      throw new ConnectionException($errorMessage, $jsonError->errors[0]->code);
     }
   }
 
@@ -128,5 +157,22 @@ class Client
         PHP_VERSION,
         php_sapi_name()
       );
+  }
+
+  /**
+   * Undocumented function
+   *
+   * @param string $errorMessage
+   * @return \stdClass
+   */
+  private function parseErrorMessage($errorMessage): \stdClass
+  {
+    $arrayError = explode('{', $errorMessage);
+    unset($arrayError[0]);
+    $rawError = '{' . implode('{', $arrayError);
+
+    $jsonError = json_decode($rawError);
+
+    return $jsonError;
   }
 }
