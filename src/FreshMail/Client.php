@@ -88,7 +88,7 @@ class Client
       if ($exception->getCode() == 401) {
         throw new UnauthorizedException('Request unauthorized');
       }
-      
+
       $jsonError = $this->parseErrorMessage($exception->getMessage());
 
       if (array_key_exists(intval($jsonError->errors[0]->code), $this->messages)) {

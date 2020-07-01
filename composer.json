@@ -1,46 +1,48 @@
 {
-    "name": "freshmail/rest-api",
-    "description": "A php library which implements the functionality of FreshMail REST API.",
-    "keywords": ["freshmail", "rest"],
-    "type": "library",
-    "license": "GPL-3.0",
-    "authors": [
-        {
-            "name": "Tadeusz Kania",
-            "email": "tadeusz.kania@freshmail.pl",
-            "homepage": "https://freshmail.pl",
-            "role": "Developer"
-        },
-        {
-            "name": "Piotr Suszalski",
-            "email": "piotr.suszalski@freshmail.pl",
-            "homepage": "https://freshmail.pl",
-            "role": "Developer"
-        },
-        {
-            "name": "Grzegorz Gorczyca",
-            "email": "grzegorz.gorczyca@freshmail.pl",
-            "homepage": "https://freshmail.pl",
-            "role": "Developer"
-        },
-        {
-            "name": "Piotr Leżoń",
-            "email": "piotr.lezon@freshmail.pl",
-            "homepage": "https://freshmail.pl",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=7.0",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "psr/log": "^1.1",
-        "monolog/monolog": "^1.25",
-        "guzzlehttp/guzzle": "^6.5"
+  "name": "katalysteducation/rest-api",
+  "description": "A php library which implements the functionality of FreshMail REST API.",
+  "keywords": [
+    "freshmail",
+    "rest"
+  ],
+  "type": "library",
+  "license": "GPL-3.0",
+  "authors": [{
+      "name": "Tadeusz Kania",
+      "email": "tadeusz.kania@freshmail.pl",
+      "homepage": "https://freshmail.pl",
+      "role": "Developer"
     },
-    "autoload": {
-        "psr-4": {
-            "FreshMail\\ApiV2\\": "src/FreshMail/"
-        }
+    {
+      "name": "Piotr Suszalski",
+      "email": "piotr.suszalski@freshmail.pl",
+      "homepage": "https://freshmail.pl",
+      "role": "Developer"
+    },
+    {
+      "name": "Grzegorz Gorczyca",
+      "email": "grzegorz.gorczyca@freshmail.pl",
+      "homepage": "https://freshmail.pl",
+      "role": "Developer"
+    },
+    {
+      "name": "Piotr Leżoń",
+      "email": "piotr.lezon@freshmail.pl",
+      "homepage": "https://freshmail.pl",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "psr/log": "^1.1",
+    "monolog/monolog": "^1.25",
+    "guzzlehttp/guzzle": "^6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "FreshMail\\ApiV2\\": "src/FreshMail/"
+    }
+  }
 }
